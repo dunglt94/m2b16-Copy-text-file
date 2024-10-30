@@ -36,10 +36,14 @@ public class CopyTextFile {
             }
 
             FileWriter writer = new FileWriter(targetFile, true);
-            for (char c : characters) {
-                writer.write(c);
-                if (c != ' ') characterCount++;
+            for (char character : characters) {
+                writer.write(character);
+                if (character != ' ' && character != '\r' && character != '\n') {
+                    characterCount++;
+                }
             }
+            writer.write("\n");
+
             writer.close();
         } catch (IOException e) {
             //noinspection CallToPrintStackTrace
