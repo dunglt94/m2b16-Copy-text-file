@@ -5,10 +5,3 @@ copy text file!!!
 
 
 test
-copy text file!!!
-
-
-123
-
-
-test

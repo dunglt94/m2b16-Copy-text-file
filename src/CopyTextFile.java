@@ -1,50 +1,33 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CopyTextFile {
-    public List<Character> readFile(String sourceFilePath) {
-        List<Character> characters = new ArrayList<>();
+        public int copyFile(String sourceFilePath, String targetFilePath) {
+        int characterCount = 0;
         try {
             File sourceFile = new File(sourceFilePath);
             if (!sourceFile.exists()) {
                 throw new FileNotFoundException();
             }
-
-            FileReader fileReader = new FileReader(sourceFile);
-            int charValue;
-            while ((charValue = fileReader.read()) != -1) {
-                characters.add((char) charValue);
-            }
-
-            fileReader.close();
-        } catch (FileNotFoundException e) {
-            System.err.println("File not found!");
-        } catch (IOException e) {
-            //noinspection CallToPrintStackTrace
-            e.printStackTrace();
-        }
-        return characters;
-    }
-
-    public int copyFile(String targetFilePath, List<Character> characters) {
-        int characterCount = 0;
-        try {
             File targetFile = new File(targetFilePath);
             if (targetFile.exists()) {
-                System.out.println("File already exists!");
+                System.out.println("File '" + targetFile.getName() + "' already exists!");
             }
 
-            FileWriter writer = new FileWriter(targetFile, true);
-            for (char character : characters) {
-                writer.write(character);
-                if (character != ' ' && character != '\r' && character != '\n') {
+            FileReader fileReader = new FileReader(sourceFile);
+            FileWriter writer = new FileWriter(targetFile);
+
+            int charValue;
+            while ((charValue = fileReader.read()) != -1) {
+                writer.write((char) charValue);
+                if ((char) charValue != ' ' && (char) charValue != '\r' && (char) charValue != '\n') {
                     characterCount++;
                 }
             }
-            writer.write("\n");
 
+            fileReader.close();
             writer.close();
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found!");
         } catch (IOException e) {
             //noinspection CallToPrintStackTrace
             e.printStackTrace();
